@@ -6,7 +6,7 @@ import { AuthContext } from '../providers/AuthProvider';
 
 const Register = () => {
     const [isEmailLogin, setEmailLogin] = useState(false);
-    const { userSignUp, updateUserInfo, setUser, setLoading } = useContext(AuthContext);
+    const { userSignUp, updateUserInfo, setUser, setLoading, googleSignIn } = useContext(AuthContext);
 
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -17,6 +17,16 @@ const Register = () => {
 
     const handleEmailLoginForm = () => {
         setEmailLogin(true);
+    }
+
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then(result => {
+                setUser(result.user);
+                setLoading(false);
+                navigate('/');
+            })
+            .catch(err => console.error(err.message))
     }
 
     const onSubmit = data => {
@@ -57,14 +67,14 @@ const Register = () => {
                             </div>
                             <div className='space-y-2 w-1/4'>
                                 <label htmlFor="password" className='text-xl font-medium'>Password*</label>
-                                <input type="password" {...register("password", { 
-                                    required: 'This field is required' ,
+                                <input type="password" {...register("password", {
+                                    required: 'This field is required',
                                     minLength: 6,
                                     pattern: {
                                         value: /^(?=.*[A-Z])(?=.*[!@#$%^&*]).*$/,
                                         message: "Password must contain at least 6 characters, one capital letter, and one special character"
                                     }
-                                    })} placeholder="Your password" className="input input-bordered input-primary w-full" />
+                                })} placeholder="Your password" className="input input-bordered input-primary w-full" />
                                 {errors.password && <span>{errors.password.message}</span>}
                             </div>
                             <div className='space-y-2 w-1/4'>
@@ -86,7 +96,7 @@ const Register = () => {
 
 
                         <div className="divider w-1/4 mx-auto">OR</div>
-                        <div className="flex items-center text-center justify-center gap-4  p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer">
+                        <div className="flex items-center text-center justify-center gap-4  p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer" onClick={handleGoogleLogin}>
                             <FaGoogle className='text-3xl' />
                             <p>Sign Up with Google</p>
                         </div>
@@ -96,7 +106,7 @@ const Register = () => {
                         </div>
                     </> :
                     <>
-                        <div className="flex items-center text-center justify-center gap-4 mt-6 p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer">
+                        <div className="flex items-center text-center justify-center gap-4 mt-6 p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer" onClick={handleGoogleLogin}>
                             <FaGoogle className='text-3xl' />
                             <p>Sign Up with Google</p>
                         </div>

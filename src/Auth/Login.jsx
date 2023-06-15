@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 const Login = () => {
     const [isEmailLogin, setEmailLogin] = useState(false);
-    const { userSignIn, setLoading } = useContext(AuthContext);
+    const { userSignIn, setLoading, googleSignIn, setUser } = useContext(AuthContext);
 
 
     const { register, handleSubmit } = useForm();
@@ -19,6 +19,18 @@ const Login = () => {
     const handleEmailLoginForm = () => {
         setEmailLogin(true);
     }
+
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then(result => {
+                setUser(result.user);
+                setLoading(false);
+                navigate(form, { replace: true });
+            })
+            .catch(err => console.error(err.message))
+    }
+
+
 
     const onSubmit = data => {
         userSignIn(data.email, data.password)
@@ -33,9 +45,12 @@ const Login = () => {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
                     })
+                    setUser(result.user);
+                    setLoading(false);
                     navigate(form, { replace: true })
                 }
             })
+            .catch(err => console.error(err.message))
     }
 
 
@@ -66,7 +81,7 @@ const Login = () => {
 
 
                         <div className="divider w-1/4 mx-auto">OR</div>
-                        <div className="flex items-center text-center justify-center gap-4  p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer">
+                        <div className="flex items-center text-center justify-center gap-4  p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer" onClick={handleGoogleLogin}>
                             <FaGoogle className='text-3xl' />
                             <p>Sign In with Google</p>
                         </div>
@@ -76,7 +91,7 @@ const Login = () => {
                         </div>
                     </> :
                     <>
-                        <div className="flex items-center text-center justify-center gap-4 mt-6 p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer">
+                        <div className="flex items-center text-center justify-center gap-4 mt-6 p-4 w-1/4 text-xl border border-cyan-700 rounded-md bg-stone-300 cursor-pointer" onClick={handleGoogleLogin}>
                             <FaGoogle className='text-3xl' />
                             <p>Sign In with Google</p>
                         </div>
