@@ -13,3 +13,7 @@
 .font-jost{
   font-family: 'Jost', sans-serif;
 }
+
+.mySwiper .swiper-pagination-progressbar {
+  bottom: 0;
+}
