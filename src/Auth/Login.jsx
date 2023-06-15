@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaFacebook, FaGoogle, FaRegEnvelope } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
 
@@ -11,6 +11,10 @@ const Login = () => {
 
 
     const { register, handleSubmit } = useForm();
+    const location = useLocation();
+    const form = location?.form?.pathname || '/';
+    const navigate = useNavigate();
+
 
     const handleEmailLoginForm = () => {
         setEmailLogin(true);
@@ -29,6 +33,7 @@ const Login = () => {
                             popup: 'animate__animated animate__fadeOutUp'
                         }
                     })
+                    navigate(form, { replace: true })
                 }
             })
     }

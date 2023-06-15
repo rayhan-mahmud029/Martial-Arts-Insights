@@ -1,19 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTwitter, FaUserCircle, FaYoutube } from "react-icons/fa";
+import { AuthContext } from '../providers/AuthProvider';
 
 const NavBar = () => {
+    const { user, authLogOut } = useContext(AuthContext);
+    console.log(user);
+
+    // logout
+    const handleLogOut = () => {
+        authLogOut().then(() => { }).catch(err => console.error(err.message))
+    }
+
+
     return (
         <div className='sticky space-y-4'>
             <div className="w-11/12 mx-auto">
                 <div className="flex justify-between items-center h-20 bg-[#434343] px-8 text-white">
                     <div className='flex gap-4 items-center text-2xl'>
-                        <FaUserCircle />
-                        <Link to='/auth/login' className='font-sans font-extrabold'><h1>Log In</h1></Link>
+                        {
+                            user ?
+                                <>
+                                    <div className="w-12 h-12 rounded-full border">
+                                        <img src={user?.photoURL} alt="" className='w-12 h-12 rounded-full object-cover'/>
+                                    </div>
+                                    <h1>{user?.displayName}</h1>
+                                    <h3 className='text-sm cursor-pointer' onClick={handleLogOut}>Log Out</h3>
+                                </> :
+                                <>
+                                    <FaUserCircle />
+                                    <Link to='/auth/login' className='font-sans font-extrabold'><h1>Log In</h1></Link>
+                                </>
+                        }
                     </div>
                     <Link to='/dashboard' className='flex items-center text-xl'>
                         <h1 className="uppercase">Dashboard</h1>
-                        <FaAngleRight/>
+                        <FaAngleRight />
                     </Link>
                     <div className='text-white space-x-4 flex  text-xl lg:text-2xl items-center'>
                         <FaFacebookF />

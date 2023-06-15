@@ -1,15 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaFacebook, FaGoogle, FaRegEnvelope } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Register = () => {
     const [isEmailLogin, setEmailLogin] = useState(false);
-    const { userSignUp } = useContext(AuthContext);
+    const { userSignUp, updateUserInfo, setUser, setLoading } = useContext(AuthContext);
 
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const password = useRef({});
+    password.current = watch('password', "")
+    const navigate = useNavigate();
+
 
     const handleEmailLoginForm = () => {
         setEmailLogin(true);
@@ -19,6 +23,13 @@ const Register = () => {
         userSignUp(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
+                updateUserInfo(data.name, data.photo_url)
+                    .then(() => {
+                        setUser(loggedUser)
+                        setLoading(false);
+                        navigate('/')
+                    })
+                    .catch(err => console.error(err.message))
                 console.log(loggedUser);
             })
             .catch(err => console.error(err.message))
@@ -40,22 +51,37 @@ const Register = () => {
                             </div>
                             <div className='space-y-2 w-1/4'>
                                 <label htmlFor="email" className='text-xl font-medium'>Email*</label>
-                                <input type="email" {...register("email")} placeholder="Your email" className="input input-bordered input-primary w-full" />
+                                <input type="email" {...register("email", { required: 'This field is required' })} placeholder="Your email" className="input input-bordered input-primary w-full" />
+                                {errors.email && <span>{errors.email.message}</span>}
+
                             </div>
                             <div className='space-y-2 w-1/4'>
                                 <label htmlFor="password" className='text-xl font-medium'>Password*</label>
-                                <input type="password" {...register("password")} placeholder="Your password" className="input input-bordered input-primary w-full" />
+                                <input type="password" {...register("password", { 
+                                    required: 'This field is required' ,
+                                    minLength: 6,
+                                    pattern: {
+                                        value: /^(?=.*[A-Z])(?=.*[!@#$%^&*]).*$/,
+                                        message: "Password must contain at least 6 characters, one capital letter, and one special character"
+                                    }
+                                    })} placeholder="Your password" className="input input-bordered input-primary w-full" />
+                                {errors.password && <span>{errors.password.message}</span>}
                             </div>
                             <div className='space-y-2 w-1/4'>
                                 <label htmlFor="confirm_password" className='text-xl font-medium'>Confirm Password*</label>
-                                <input type="password" {...register("confirm_password")} placeholder="Confirm password" className="input input-bordered input-primary w-full" />
+                                <input type="password" {...register("confirm_password", {
+                                    required: 'This field is required',
+                                    validate: (value) =>
+                                        value === password.current || "The passwords do not match"
+                                })} placeholder="Confirm password" className="input input-bordered input-primary w-full" />
+                                {errors.confirm_password && <span>{errors.confirm_password.message}</span>}
                             </div>
                             <div className='space-y-2 w-1/4'>
                                 <label htmlFor="photo_url" className='text-xl font-medium'>Photo URL*</label>
                                 <input type="url" {...register("photo_url")} placeholder="Your profile photo URL" className="input input-bordered input-primary w-full" />
                             </div>
 
-                            <button type="submit" className='btn w-1/4 bg-[#434343] text-white hover:text-black hover:bg-[#5d5c5c]'>Sign In</button>
+                            <button type="submit" className='btn w-1/4 bg-[#434343] text-white hover:text-black hover:bg-[#5d5c5c]'>Sign Up</button>
                         </form>
 
 
