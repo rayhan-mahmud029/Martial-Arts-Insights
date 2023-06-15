@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaTwitter, FaUserCircle, FaYoutube } from "react-icons/fa";
+import { FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTwitter, FaUserCircle, FaYoutube } from "react-icons/fa";
 
 const NavBar = () => {
     return (
@@ -11,6 +11,10 @@ const NavBar = () => {
                         <FaUserCircle />
                         <Link to='/auth/login' className='font-sans font-extrabold'><h1>Log In</h1></Link>
                     </div>
+                    <Link to='/dashboard' className='flex items-center text-xl'>
+                        <h1 className="uppercase">Dashboard</h1>
+                        <FaAngleRight/>
+                    </Link>
                     <div className='text-white space-x-4 flex  text-xl lg:text-2xl items-center'>
                         <FaFacebookF />
                         <FaTwitter />
