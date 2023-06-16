@@ -51,8 +51,8 @@ const NavBar = () => {
 
                     <div className="flex gap-4 uppercase lg:text-xl">
                         <Link to='/'><p>Home</p></Link>
-                        <Link to='/'><p>Instructors</p></Link>
-                        <Link to='/'><p>Classes</p></Link>
+                        <Link to='/instructors'><p>Instructors</p></Link>
+                        <Link to='/classes'><p>Classes</p></Link>
                     </div>
                 </div>
             </div>

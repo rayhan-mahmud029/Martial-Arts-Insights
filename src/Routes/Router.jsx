@@ -4,6 +4,7 @@ import Main from '../Layouts/Main';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import Home from '../pages/Home';
+import Instructors from '../pages/Instructors';
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: '/auth/register',
                 element: <Register />
+            },
+            {
+                path: '/instructors',
+                element: <Instructors/>
             }
         ]
     }
