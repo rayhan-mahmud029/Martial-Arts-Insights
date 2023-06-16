@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import { Link, Outlet } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Dashboard = () => {
+    const {user} = useContext(AuthContext);
+    
     return (
         <div className='w-11/12 mx-auto'>
             <div className="drawer lg:drawer-open">

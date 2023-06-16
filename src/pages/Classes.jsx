@@ -33,11 +33,19 @@ const Classes = () => {
     console.log(activeClasses);
 
     const handleSelectClass = (classItem) => {
-        const {name, instructorName, image,  _id: classID, price} = classItem;
-        const userSelectedClass = {name, classID, price,  instructorName, image, userEmail: user?.email, userName: user?.displayName || 'unknown' };
+        const { name, instructorName, instructorEmail, image, _id: classID, price } = classItem;
+        const userSelectedClass = { name, classID, price, instructorName, instructorEmail, image, userEmail: user?.email, userName: user?.displayName || 'unknown' };
         if (user) {
             axios.post('http://localhost:5000/selected-classes', userSelectedClass)
-                .then(data => console.log(data))
+                .then(data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${classItem.name} class has been selected. Have a look at dashboard for more info`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                })
                 .catch(err => console.error(err.message))
 
         } else {
