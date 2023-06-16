@@ -1,29 +1,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
 import DashboardPageTitle from '../components/DashboardPageTitle';
-import useSelectedClasses from '../hooks/useSelectedClasses';
 import useClasses from '../hooks/useClasses';
+import usePaidClasses from '../hooks/usePaidClasses';
 
 const StudentsEnrolledClasses = () => {
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);   
+    const [paidClasses] = usePaidClasses()  //paid classes hook
 
-    // query for enrolled class data
-    const { data: paidClasses = [], error } = useQuery(['paidClasses'], async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/payments?email=${user?.email}`);
-            if (response.status !== 200) {
-                throw new Error('Network response was not ok');
-            }
-            return response.data;
-        } catch (error) {
-            throw new Error('Error fetching data');
-        }
-    });
-
-
-    // get selected classes using hook
+    // get all classes using hook;
     const [classes] = useClasses();
     console.log(classes);
     let enrolledClasses = [];

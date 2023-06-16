@@ -3,11 +3,14 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import useClasses from '../hooks/useClasses';
 
 const CheckOutForm = ({ price , selectedClasses}) => {
     const { user } = useContext(AuthContext);
     const stripe = useStripe();
     const elements = useElements();
+    const [refetch] = useClasses();
+
 
     const [errorMessage, setErrorMessage] = useState(null);
     const [clientSecret, setClientSecret] = useState('');
@@ -86,6 +89,7 @@ const CheckOutForm = ({ price , selectedClasses}) => {
                 email: user?.email,
                 transactionId,
                 totalAmount: price,
+                paymentTime:  new Date().toLocaleString(),
                 quantity: selectedClasses.length,
                 paidClassItems: selectedClasses.map(item => item._id),
                 classItems: selectedClasses.map(item => item.classID),
@@ -93,6 +97,7 @@ const CheckOutForm = ({ price , selectedClasses}) => {
             }
             axios.post('http://localhost:5000/payments', { paymentInfo })
                 .then(res => {
+                    refetch()
                     console.log(res);
                 })
 

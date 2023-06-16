@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { FaAngleRight } from 'react-icons/fa';
+import { FaAngleRight, FaPause, FaPlay, FaWallet } from 'react-icons/fa';
 import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Dashboard = () => {
-    const {user} = useContext(AuthContext);
-    
+    const { user } = useContext(AuthContext);
+
     return (
         <div className='w-11/12 mx-auto'>
             <div className="drawer lg:drawer-open">
@@ -18,12 +18,21 @@ const Dashboard = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 h-full text-blue-900">
+                    <ul className="menu p-4 w-96 h-full text-blue-900">
                         {/* Sidebar content here */}
-                        <li className='text-2xl my-2 font-bold flex items-center'><Link to='/dashboard/selected-classes' >My Selected Classes
+                        <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/selected-classes' >
+                            <FaPlay />
+                            <p>My Selected Classes</p>
                             <FaAngleRight />
                         </Link></li>
-                        <li className='text-2xl my-2 font-bold flex items-center'><Link to='/dashboard/enrolled-classes'>My Enrolled Classes
+                        <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/enrolled-classes'>
+                            <FaPause />
+                            <p>My Enrolled Classes</p>
+                            <FaAngleRight />
+                        </Link></li>
+                        <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/payment-history'>
+                            <FaWallet />
+                            <p>Payment History</p>
                             <FaAngleRight />
                         </Link></li>
                     </ul>

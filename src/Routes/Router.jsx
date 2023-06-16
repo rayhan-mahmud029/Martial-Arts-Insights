@@ -10,6 +10,7 @@ import Dashboard from '../Dashboards/Dashboard';
 import StudentsSelectedClasses from '../DashPages/StudentsSelectedClasses';
 import StudentsEnrolledClasses from '../DashPages/StudentsEnrolledClasses';
 import Payment from '../DashPages/Payment';
+import PaymentHistory from '../DashPages/PaymentHistory';
 
 
 const router = createBrowserRouter([
@@ -53,7 +54,10 @@ const router = createBrowserRouter([
                         path: '/dashboard/payment',
                         element: <Payment />
                     },
-
+                    {
+                        path: '/dashboard/payment-history',
+                        element: <PaymentHistory />
+                    }
                 ]
             }
         ]
