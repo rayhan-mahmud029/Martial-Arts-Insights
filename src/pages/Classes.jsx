@@ -5,29 +5,14 @@ import HeadingCover from '../components/HeadingCover';
 import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import useClasses from '../hooks/useClasses';
 
 const Classes = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [classes] = useClasses();
 
-    // query for classes data
-    const { data: classes = [], error } = useQuery(['classes'], async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/classes', {
-                params: {
-                    sortField: 'enrolledStudents',
-                    sortOrder: 'dsc',
-                },
-            });
-            if (response.status !== 200) {
-                throw new Error('Network response was not ok');
-            }
-            return response.data;
-        } catch (error) {
-            throw new Error('Error fetching data');
-        }
-    });
 
     const activeClasses = classes.filter(item => item.status === 'approved');
     console.log(activeClasses);
