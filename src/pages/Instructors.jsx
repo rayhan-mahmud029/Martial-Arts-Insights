@@ -26,7 +26,7 @@ const Instructors = () => {
 
     return (
         <div className='w-11/12 mx-auto'>
-            <HeadingCover img='https://i.ibb.co/yX52CWM/agressive-handsome-man-white-shirt-is-demonstraiting-his-punch-dark-photo-studio-min.jpg' title={'Our Mentors'} description={'Experienced martial art instructors offering a variety of classes, fostering skill development and personal growth in a supportive learning environment.'} />
+            <HeadingCover img='https://i.ibb.co/yX52CWM/agressive-handsome-man-white-shirt-is-demonstraiting-his-punch-dark-photo-studio-min.jpg' title={'Our Esteemed Master'} description={'Seasoned martial arts instructors providing diverse class options, cultivating proficiency and individual development within a nurturing educational setting..'} />
 
             <section className="my-8">
                 {
@@ -41,7 +41,7 @@ const Instructors = () => {
                                         {instructor.classes.map(item => <li className={index % 2 !== 0 ? 'pe-6 py-0.5' : 'ps-6 py-0.5'}>{item}</li>)}
                                     </span>
                                 </ol>
-                                <button className="btn btn-primary">See Classes</button>
+                                <button className="btn btn-outline btn-sm" disabled>See Classes</button>
                             </div>
                         </div>
                     </div>)

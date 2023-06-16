@@ -46,7 +46,7 @@ const NavBar = () => {
                 </div>
                 <div className="py-4 mx-12 flex justify-between items-center">
                     <h1 className='text-2xl lg:text-3xl font-jost font-medium uppercase tracking-tighter text-center inline-block'>Martial Art's <br />
-                        <span className='tracking-[0.2em] font-thin'>Insights</span>
+                        <span className='tracking-[0.2em] font-thin text-2xl'>Insights</span>
                     </h1>
 
                     <div className="flex gap-4 uppercase lg:text-xl">
