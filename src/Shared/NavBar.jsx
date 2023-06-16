@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTwitter, FaUserCircle, FaYoutube } from "react-icons/fa";
 import { AuthContext } from '../providers/AuthProvider';
 
 const NavBar = () => {
     const { user, authLogOut } = useContext(AuthContext);
+    const location = useLocation();
     console.log(user);
 
     // logout
@@ -22,7 +23,7 @@ const NavBar = () => {
                             user ?
                                 <>
                                     <div className="w-12 h-12 rounded-full border">
-                                        <img src={user?.photoURL} alt="" className='w-12 h-12 rounded-full object-cover'/>
+                                        <img src={user?.photoURL} alt="" className='w-12 h-12 rounded-full object-cover' />
                                     </div>
                                     <h1>{user?.displayName}</h1>
                                     <h3 className='text-sm cursor-pointer' onClick={handleLogOut}>Log Out</h3>
@@ -33,10 +34,17 @@ const NavBar = () => {
                                 </>
                         }
                     </div>
-                    <Link to='/dashboard' className='flex items-center text-xl'>
-                        <h1 className="uppercase">Dashboard</h1>
-                        <FaAngleRight />
-                    </Link>
+                    {
+                        location.pathname.includes('dashboard') ?
+                            <Link to='/' className='flex items-center text-xl'>
+                                <h1 className="uppercase">Home</h1>
+                                <FaAngleRight />
+                            </Link> :
+                            <Link to='/dashboard' className='flex items-center text-xl'>
+                                <h1 className="uppercase">Dashboard</h1>
+                                <FaAngleRight />
+                            </Link>
+                    }
                     <div className='text-white space-x-4 flex  text-xl lg:text-2xl items-center'>
                         <FaFacebookF />
                         <FaTwitter />

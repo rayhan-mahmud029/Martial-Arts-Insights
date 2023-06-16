@@ -32,8 +32,15 @@ const Classes = () => {
     const activeClasses = classes.filter(item => item.status === 'approved');
     console.log(activeClasses);
 
-    const handleEnrollButton = () => {
-        if (!user) {
+    const handleSelectClass = (classItem) => {
+        const {name, instructorName, image,  _id: classID, price} = classItem;
+        const userSelectedClass = {name, classID, price,  instructorName, image, userEmail: user?.email, userName: user?.displayName || 'unknown' };
+        if (user) {
+            axios.post('http://localhost:5000/selected-classes', userSelectedClass)
+                .then(data => console.log(data))
+                .catch(err => console.error(err.message))
+
+        } else {
             Swal.fire({
                 title: 'Login Please ',
                 text: "You have to log in first",
@@ -65,7 +72,7 @@ const Classes = () => {
                             <p className='text-xs font-sans'>Instructor Name: {classItem.instructorName}</p>
                             <div className="card-actions justify-between">
                                 <h1 className="text-xl font-bold">Price: ${classItem.price}</h1>
-                                <button className="btn btn-outline btn-accent btn-sm" onClick={handleEnrollButton} disabled={classItem.availableSeats === 0 && true}>Enroll Now</button>
+                                <button className="btn btn-outline btn-accent btn-sm" onClick={() => handleSelectClass(classItem)} disabled={classItem.availableSeats === 0 && true}>Select</button>
                             </div>
                         </div>
                     </div>)
