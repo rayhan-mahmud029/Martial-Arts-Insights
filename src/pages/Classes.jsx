@@ -57,15 +57,15 @@ const Classes = () => {
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 my-12'>
                 {
                     activeClasses.map(classItem => <div key={classItem._id} className="card w-96 bg-base-100 shadow-xl image-full hover:scale-110 hover:-translate-x-5 hover:-translate-y-5 hover:z-50 transition">
-                        <figure><img src={classItem.image} alt="Shoes" className='' /></figure>
-                        <div className="card-body mt-16">
+                        <figure><img src={classItem.image} alt="Shoes" className='bg-red-400' /></figure>
+                        <div className={`card-body pt-16 ${classItem.availableSeats === 0 && 'bg-red-500 bg-opacity-60'} rounded-xl `}>
                             <h2 className="card-title font-poppins">{classItem.name}</h2>
                             <p className='text-xs font-sans'>Enrolled Students: {classItem.enrolledStudents}</p>
                             <p className='text-xs font-sans'>Available Seats: {classItem.availableSeats}</p>
                             <p className='text-xs font-sans'>Instructor Name: {classItem.instructorName}</p>
                             <div className="card-actions justify-between">
                                 <h1 className="text-xl font-bold">Price: ${classItem.price}</h1>
-                                <button className="btn btn-outline btn-accent btn-sm" onClick={handleEnrollButton}>Enroll Now</button>
+                                <button className="btn btn-outline btn-accent btn-sm" onClick={handleEnrollButton} disabled={classItem.availableSeats === 0 && true}>Enroll Now</button>
                             </div>
                         </div>
                     </div>)
