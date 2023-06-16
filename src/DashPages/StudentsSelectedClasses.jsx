@@ -4,23 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import DashboardPageTitle from '../components/DashboardPageTitle';
 import { FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import useSelectedClasses from '../hooks/useSelectedClasses';
 
 const StudentsSelectedClasses = () => {
     const { user } = useContext(AuthContext);
 
+    const [selectedClasses] = useSelectedClasses();
+    console.log(selectedClasses);
 
-    // query for selected class data
-    const { data: selectedClasses = [], error } = useQuery(['selectedClasses'], async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/selected-classes?email=${user?.email}`);
-            if (response.status !== 200) {
-                throw new Error('Network response was not ok');
-            }
-            return response.data;
-        } catch (error) {
-            throw new Error('Error fetching data');
-        }
-    });
+
+ 
     console.log(selectedClasses);
     const totalPrice = selectedClasses.reduce((sum, item) => sum + item.price, 0);
 
@@ -79,7 +73,7 @@ const StudentsSelectedClasses = () => {
                 </table>
 
                 <div className="w-full">
-                    <button className='w-full btn btn-neutral my-6'>Pay (total: ${totalPrice})</button>
+                    <Link to='/dashboard/payment' className='w-full btn btn-neutral my-6' >Pay (total: ${totalPrice})</Link>
                 </div>
             </div>
         </div>
