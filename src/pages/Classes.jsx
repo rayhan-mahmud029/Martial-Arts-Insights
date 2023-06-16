@@ -3,10 +3,14 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import HeadingCover from '../components/HeadingCover';
 import { AuthContext } from '../providers/AuthProvider';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Classes = () => {
-    const {user} = useContext(AuthContext);
-    
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+
     // query for classes data
     const { data: classes = [], error } = useQuery(['classes'], async () => {
         try {
@@ -26,10 +30,24 @@ const Classes = () => {
     });
 
     const activeClasses = classes.filter(item => item.status === 'approved');
-    console.log( activeClasses);
+    console.log(activeClasses);
 
     const handleEnrollButton = () => {
-
+        if (!user) {
+            Swal.fire({
+                title: 'Login Please ',
+                text: "You have to log in first",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/auth/login')
+                }
+            })
+        }
     }
 
     return (
