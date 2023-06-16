@@ -10,9 +10,10 @@ const Login = () => {
     const { userSignIn, setLoading, googleSignIn, setUser } = useContext(AuthContext);
 
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const location = useLocation();
     const form = location?.form?.pathname || '/';
+    console.log(form);
     const navigate = useNavigate();
 
 
@@ -23,9 +24,30 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(result => {
-                setUser(result.user);
-                setLoading(false);
-                navigate(form, { replace: true });
+                const loggedUser = result.user;
+
+                // store user to database
+                const userData = { name: loggedUser.displayName, email: loggedUser.email, photoURL: loggedUser.photoURL, role: 'user' };
+
+                fetch('http://localhost:5000/users',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(userData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            console.log('user stored');
+                        }
+                        setUser(loggedUser);
+                        console.log(loggedUser);
+                        setLoading(false);
+                        navigate(form, { replace: true });
+                    })
+                    .catch(err => console.error(err.message))
             })
             .catch(err => console.error(err.message))
     }

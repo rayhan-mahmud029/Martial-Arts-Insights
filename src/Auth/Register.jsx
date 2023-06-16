@@ -9,7 +9,7 @@ const Register = () => {
     const { userSignUp, updateUserInfo, setUser, setLoading, googleSignIn } = useContext(AuthContext);
 
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
     const password = useRef({});
     password.current = watch('password', "")
     const navigate = useNavigate();
@@ -22,9 +22,30 @@ const Register = () => {
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(result => {
-                setUser(result.user);
-                setLoading(false);
-                navigate('/');
+                const loggedUser = result.user;
+
+                // store user to database
+                const userData = { name: loggedUser.displayName, email: loggedUser.email, photoURL: loggedUser.photoURL, role: 'user' };
+
+                fetch('http://localhost:5000/users',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(userData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            console.log('user stored');
+                            setUser(loggedUser);
+                            console.log(loggedUser);
+                            navigate('/')
+                            setLoading(false);
+                        }
+                    })
+                    .catch(err => console.error(err.message))
             })
             .catch(err => console.error(err.message))
     }
@@ -32,12 +53,33 @@ const Register = () => {
     const onSubmit = data => {
         userSignUp(data.email, data.password)
             .then(result => {
-                const loggedUser = result.user;
                 updateUserInfo(data.name, data.photo_url)
                     .then(() => {
-                        setUser(loggedUser)
-                        setLoading(false);
-                        navigate('/')
+                        const loggedUser = result.user;
+
+                        // store user to database
+                        const userData = { name: loggedUser.displayName, email: loggedUser.email, photoURL: loggedUser.photoURL, role: 'user' };
+
+                        fetch('http://localhost:5000/users',
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(userData)
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    console.log('user stored');
+                                    setUser(loggedUser);
+                                    console.log(loggedUser);
+                                    reset()
+                                    navigate('/')
+                                    setLoading(false);
+                                }
+                            })
+                            .catch(err => console.error(err.message))
                     })
                     .catch(err => console.error(err.message))
                 console.log(loggedUser);
