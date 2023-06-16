@@ -6,17 +6,50 @@ import DashboardPageTitle from '../components/DashboardPageTitle';
 import { FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import useSelectedClasses from '../hooks/useSelectedClasses';
+import Swal from 'sweetalert2';
 
 const StudentsSelectedClasses = () => {
     const { user } = useContext(AuthContext);
 
-    const [selectedClasses] = useSelectedClasses();
+    const [selectedClasses, refetch] = useSelectedClasses();
     console.log(selectedClasses);
 
 
  
     console.log(selectedClasses);
     const totalPrice = selectedClasses.reduce((sum, item) => sum + item.price, 0);
+
+    // handle delete selected class
+    const handleDelete = item => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/selected-classes/${item._id}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire(
+                                'Deleted!',
+                                'Your selected class has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+            }
+        })
+
+    }
 
 
     return (
@@ -60,7 +93,7 @@ const StudentsSelectedClasses = () => {
 
                                 <td className='text-cyan-700 font-semibold text-lg'>${selectedClass.price}</td>
                                 <th>
-                                    <button className="btn btn-active btn-md text-red-700 text-xl hover:bg-slate-400">
+                                    <button className="btn btn-active btn-md text-red-700 text-xl hover:bg-slate-400" onClick={() => handleDelete(selectedClass)}>
                                         <FaTrash/>
                                     </button>
                                 </th>
