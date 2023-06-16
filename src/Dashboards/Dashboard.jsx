@@ -5,8 +5,8 @@ import { AuthContext } from '../providers/AuthProvider';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
-    const isAdmin = true;
-    const isInstructor = false;
+    const isAdmin = false;
+    const isInstructor = true;
 
 
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
                             isAdmin &&
                             <>
                                 <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/manage-classes' >
-                                    <FaLayerGroup/>
+                                    <FaLayerGroup />
                                     <p>Manage Classes</p>
                                     <FaAngleRight />
                                 </Link></li>
@@ -39,19 +39,12 @@ const Dashboard = () => {
                                 </Link></li>
                             </> || isInstructor &&
                             <>
-                                <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/selected-classes' >
-                                    <FaPlay />
-                                    <p>My Selected Classes</p>
+                                <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/add-class' >
+                                    <p>Add a Class</p>
                                     <FaAngleRight />
                                 </Link></li>
-                                <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/enrolled-classes'>
-                                    <FaPause />
-                                    <p>My Enrolled Classes</p>
-                                    <FaAngleRight />
-                                </Link></li>
-                                <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/payment-history'>
-                                    <FaWallet />
-                                    <p>Payment History</p>
+                                <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/my-classes'>
+                                    <p>My Classes</p>
                                     <FaAngleRight />
                                 </Link></li>
                             </> ||
