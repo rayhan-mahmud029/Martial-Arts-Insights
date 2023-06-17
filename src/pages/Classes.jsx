@@ -63,7 +63,7 @@ const Classes = () => {
 
             <div className=''>
                 <motion.div
-                    className="container grid grid-cols-1 lg:grid-cols-3 gap-4 my-12"
+                    className="container grid grid-cols-1 lg:grid-cols-3 gap-8 my-12"
                     initial={{ scale: 0 }}
                     animate={{ rotate: 5, scale: 0.9 }}
                     transition={{
