@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const Login = () => {
     const [isEmailLogin, setEmailLogin] = useState(false);
+    const [authError, setAuthError] = useState('');
     const { userSignIn, setLoading, googleSignIn, setUser } = useContext(AuthContext);
 
 
@@ -44,12 +45,13 @@ const Login = () => {
                         }
                         setUser(loggedUser);
                         console.log(loggedUser);
+                        setAuthError('')
                         setLoading(false);
                         navigate(form, { replace: true });
                     })
                     .catch(err => console.error(err.message))
             })
-            .catch(err => console.error(err.message))
+            .catch(err => setAuthError(err.message))
     }
 
 
@@ -68,11 +70,12 @@ const Login = () => {
                         }
                     })
                     setUser(result.user);
+                    setAuthError('')
                     setLoading(false);
                     navigate(form, { replace: true })
                 }
             })
-            .catch(err => console.error(err.message))
+            .catch(err => setAuthError(err.message))
     }
 
 
@@ -96,6 +99,7 @@ const Login = () => {
                                 <label htmlFor="password" className='text-xl font-medium'>Password*</label>
                                 <input type="password" {...register("password")} placeholder="Your password" className="input input-bordered input-primary w-full" />
                             </div>
+                            {authError && <span className='text-center text-red-600 font-semibold'>{authError}</span>}
 
 
                             <button type="submit" className='btn w-1/4 bg-[#434343] text-white hover:text-black hover:bg-[#5d5c5c]'>Sign In</button>

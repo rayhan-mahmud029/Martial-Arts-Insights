@@ -6,12 +6,18 @@ import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import useClasses from '../hooks/useClasses';
+import useAdmin from '../hooks/useAdmin';
+import useInstructor from '../hooks/useInstructor';
 
 const Classes = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [classes] = useClasses();
+
+    const [isAdmin, isAdminLoading] = useAdmin();
+    const [isInstructor, isInstructorLoading] = useInstructor();
+
 
 
     const activeClasses = classes.filter(item => item.status === 'approved');
@@ -65,7 +71,7 @@ const Classes = () => {
                             <p className='text-xs font-sans'>Instructor Name: {classItem.instructorName}</p>
                             <div className="card-actions justify-between">
                                 <h1 className="text-xl font-bold">Price: ${classItem.price}</h1>
-                                <button className="btn btn-outline btn-accent btn-sm" onClick={() => handleSelectClass(classItem)} disabled={classItem.availableSeats === 0 && true}>Select</button>
+                                <button  className="btn btn-outline btn-accent btn-sm" onClick={() => handleSelectClass(classItem)} disabled={(classItem.availableSeats === 0 || isAdmin || isInstructor) && true }>Select</button>
                             </div>
                         </div>
                     </div>)

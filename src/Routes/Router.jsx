@@ -15,12 +15,17 @@ import ManageClasses from '../DashPages/ManageClasses';
 import ManageUsers from '../DashPages/ManageUsers';
 import AddClass from '../DashPages/AddClass';
 import MyClasses from '../DashPages/MyClasses';
+import AdminProtectedRoute from './AdminProtectedRoute';
+import InstructorProtectedRoute from './InstructorProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
+import ErrorPage from '../pages/ErrorPage';
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main />,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: '/',
@@ -44,7 +49,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard',
-                element: <Dashboard />,
+                element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
                 children: [
                     {
                         path: '/dashboard/selected-classes',
@@ -64,19 +69,19 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/dashboard/manage-classes',
-                        element: <ManageClasses/>
+                        element: <AdminProtectedRoute> <ManageClasses/></AdminProtectedRoute>
                     },
                     {
                         path: '/dashboard/manage-users',
-                        element: <ManageUsers/>
+                        element: <AdminProtectedRoute><ManageUsers/></AdminProtectedRoute>
                     },
                     {
                         path: '/dashboard/add-class',
-                        element: <AddClass/>
+                        element: <InstructorProtectedRoute><AddClass/></InstructorProtectedRoute>
                     },
                     {
                         path: '/dashboard/my-classes',
-                        element: <MyClasses/>
+                        element: <InstructorProtectedRoute><MyClasses/></InstructorProtectedRoute>
                     }
                 ]
             }

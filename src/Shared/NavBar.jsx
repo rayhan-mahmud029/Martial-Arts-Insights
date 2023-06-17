@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaAngleRight, FaArrowRight, FaFacebookF, FaInstagram, FaTwitter, FaUserCircle, FaYoutube } from "react-icons/fa";
 import { AuthContext } from '../providers/AuthProvider';
+import { Spinner } from 'flowbite-react';
 
 const NavBar = () => {
-    const { user, authLogOut } = useContext(AuthContext);
+    const { user, authLogOut, loading } = useContext(AuthContext);
     const location = useLocation();
     console.log(user);
 
@@ -27,11 +28,14 @@ const NavBar = () => {
                                     </div>
                                     <h1>{user?.displayName}</h1>
                                     <h3 className='text-sm cursor-pointer' onClick={handleLogOut}>Log Out</h3>
-                                </> :
-                                <>
-                                    <FaUserCircle />
-                                    <Link to='/auth/login' className='font-sans font-extrabold'><h1>Log In</h1></Link>
-                                </>
+                                </> : loading ? <Spinner
+                                    aria-label="Large spinner example"
+                                    size="lg"
+                                /> :
+                                    <>
+                                        <FaUserCircle />
+                                        <Link to='/auth/login' className='font-sans font-extrabold'><h1>Log In</h1></Link>
+                                    </>
                         }
                     </div>
                     {

@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
 import { FaAngleRight, FaLayerGroup, FaPause, FaPlay, FaUser, FaWallet } from 'react-icons/fa';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
+import useInstructor from '../hooks/useInstructor';
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext);
-    const isAdmin = true;
-    const isInstructor = false;
+    const [isAdmin, isAdminLoading] = useAdmin();
+    const [isInstructor, isInstructorLoading] = useInstructor();
+
+
+    console.log(isAdmin, isInstructor);
+
 
 
 
@@ -47,8 +52,9 @@ const Dashboard = () => {
                                     <p>My Classes</p>
                                     <FaAngleRight />
                                 </Link></li>
-                            </> ||
-                            <>
+                            </> || (isAdminLoading || isInstructorLoading) &&
+                            <progress className="progress w-56 mx-auto ms-10"></progress>
+                            || <>
                                 <li className='text-2xl my-2 font-bold'><Link className='flex  items-center' to='/dashboard/selected-classes' >
                                     <FaPlay />
                                     <p>My Selected Classes</p>

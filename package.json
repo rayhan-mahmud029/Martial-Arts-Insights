@@ -19,6 +19,8 @@
     "axios": "^1.4.0",
     "daisyui": "^3.1.0",
     "firebase": "^9.22.2",
+    "flowbite": "^1.6.6",
+    "flowbite-react": "^0.4.7",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
