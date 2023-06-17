@@ -31,7 +31,7 @@ const StudentsSelectedClasses = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/selected-classes/${item._id}`, {
+                fetch(`https://martial-arts-insights-server.vercel.app/selected-classes/${item._id}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())

@@ -11,7 +11,7 @@ const Home = () => {
     // query for classes data
     const { data: classes = [], error } = useQuery(['classes'], async () => {
         try {
-            const response = await axios.get('http://localhost:5000/classes', {
+            const response = await axios.get('https://martial-arts-insights-server.vercel.app/classes', {
                 params: {
                     sortField: 'enrolledStudents',
                     sortOrder: 'dsc',
@@ -29,7 +29,7 @@ const Home = () => {
     // query for instructors data
     const { data: instructors = [], error: errorInInstructors } = useQuery(['instructors'], async () => {
         try {
-            const response = await axios.get('http://localhost:5000/instructors', {
+            const response = await axios.get('https://martial-arts-insights-server.vercel.app/instructors', {
                 params: {
                     sortField: 'numOfStudents',
                     sortOrder: 'dsc',

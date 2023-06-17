@@ -10,7 +10,7 @@ const usePaidClasses = () => {
     // query for enrolled class data
     const { refetch, data: paidClasses = [], error } = useQuery(['paidClasses'], async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/payments?email=${user?.email}`, {
+            const response = await axios.get(`https://martial-arts-insights-server.vercel.app/payments?email=${user?.email}`, {
                 params: {
                     sortField: 'paymentTime',
                     sortOrder: 'dsc',

@@ -32,7 +32,7 @@ const AddClass = () => {
                 const newItem = { name, price: parseFloat(price),instructorName: user?.displayName, instructorEmail: user?.email, availableSeats: parseInt(seats), enrolledStudents: 0, image: imageURL, status: 'pending' }
                 console.log(newItem);
 
-                axios.post('http://localhost:5000/classes', {newItem})
+                axios.post('https://martial-arts-insights-server.vercel.app/classes', {newItem})
                     .then(data => {
                         console.log('posted new item data ', data);
                         if (data.data.insertedId) {

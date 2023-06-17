@@ -23,7 +23,7 @@ const ManageClasses = () => {
 
     const handleApprove = id => {
         const status = 'approved';
-        axios.patch(`http://localhost:5000/classes/${id}`, { status })
+        axios.patch(`https://martial-arts-insights-server.vercel.app/classes/${id}`, { status })
             .then(data => {
                 console.log(data);
                 refetch();
@@ -34,7 +34,7 @@ const ManageClasses = () => {
     const handleDeny = id => {
         const status = 'denied';
         axios
-            .patch(`http://localhost:5000/classes/${id}`, { status })
+            .patch(`https://martial-arts-insights-server.vercel.app/classes/${id}`, { status })
             .then(data => {
                 console.log(data);
                 refetch();
@@ -54,7 +54,7 @@ const ManageClasses = () => {
 
         const feedback = { adminName: name, adminEmail: email, feedbackMessage: message, classID: classItem._id }
         console.log(name, email, message);
-        axios.post('http://localhost:5000/feedbacks', { feedback })
+        axios.post('https://martial-arts-insights-server.vercel.app/feedbacks', { feedback })
             .then(response => {
                 console.log('Feedback stored:', response.data);
                 setOpenModal(false);

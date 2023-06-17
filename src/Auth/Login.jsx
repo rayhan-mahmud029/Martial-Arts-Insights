@@ -30,7 +30,7 @@ const Login = () => {
                 // store user to database
                 const userData = { name: loggedUser.displayName, email: loggedUser.email, photoURL: loggedUser.photoURL, role: 'user' };
 
-                fetch('http://localhost:5000/users',
+                fetch('https://martial-arts-insights-server.vercel.app/users',
                     {
                         method: 'POST',
                         headers: {

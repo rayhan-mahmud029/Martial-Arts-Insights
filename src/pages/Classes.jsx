@@ -28,7 +28,7 @@ const Classes = () => {
         const { name, instructorName, instructorEmail, image, _id: classID, price } = classItem;
         const userSelectedClass = { name, classID, price, instructorName, instructorEmail, image, userEmail: user?.email, userName: user?.displayName || 'unknown' };
         if (user) {
-            axios.post('http://localhost:5000/selected-classes', userSelectedClass)
+            axios.post('https://martial-arts-insights-server.vercel.app/selected-classes', userSelectedClass)
                 .then(data => {
                     Swal.fire({
                         position: 'top-end',

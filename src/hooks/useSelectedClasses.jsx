@@ -10,7 +10,7 @@ const useSelectedClasses = () => {
     // query for selected class data
     const { refetch, data: selectedClasses = [], error } = useQuery(['selectedClasses'], async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/selected-classes?email=${user?.email}`);
+            const response = await axios.get(`https://martial-arts-insights-server.vercel.app/selected-classes?email=${user?.email}`);
             if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }

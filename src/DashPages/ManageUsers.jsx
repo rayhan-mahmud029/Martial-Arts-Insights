@@ -11,7 +11,7 @@ const ManageUsers = () => {
     
     const handleMakeInstructor = id => {
         const role = 'instructor';
-        axios.patch(`http://localhost:5000/users/${id}`, { role })
+        axios.patch(`https://martial-arts-insights-server.vercel.app/users/${id}`, { role })
             .then(data => {
                 console.log(data)
                 refetch()
@@ -22,7 +22,7 @@ const ManageUsers = () => {
     // make admin
     const handleMakeAdmin = id => {
         const role = 'admin';
-        axios.patch(`http://localhost:5000/users/${id}`, { role })
+        axios.patch(`https://martial-arts-insights-server.vercel.app/users/${id}`, { role })
             .then(data => {
                 console.log(data)
                 refetch()

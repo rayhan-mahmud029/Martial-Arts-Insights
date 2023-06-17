@@ -14,7 +14,7 @@ const MyClasses = () => {
 
     const { refetch, data: myClasses = [], error } = useQuery(['myClasses'], async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/classes/${user?.email}`);
+            const response = await axios.get(`https://martial-arts-insights-server.vercel.app/classes/${user?.email}`);
             if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }
@@ -30,11 +30,12 @@ const MyClasses = () => {
     const props = { openModal, setOpenModal };
 
     const handleFeedback = id => {
-        axios.get(`http://localhost:5000/feedbacks/${id}`)
+        axios.get(`https://martial-arts-insights-server.vercel.app/feedbacks/${id}`)
             .then(res => {
-                console.log(res.data);
-                setFeedbackMessage(res.data[0].feedbackMessage)
+                console.log(res?.data);
+                setFeedbackMessage(res?.data[0]?.feedbackMessage || 'Coming soon')
             })
+            .catch(err => console.error(err.message))
     }
 
     return (
@@ -84,7 +85,6 @@ const MyClasses = () => {
 
                                 <th className='flex gap-2 items-center justify-center'>
                                     <button
-                                        disabled={myClass.status === 'pending' ? false : true}
                                         className="btn btn-active btn-sm text-red-700 text-sm hover:bg-slate-400"
                                         onClick={() => {
                                             props.setOpenModal('default')

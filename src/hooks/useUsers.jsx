@@ -10,7 +10,7 @@ const useUsers = () => {
     // query for users data
     const { refetch, data: users = [], error } = useQuery(['users'], async () => {
         try {
-            const response = await axios.get('http://localhost:5000/users');
+            const response = await axios.get('https://martial-arts-insights-server.vercel.app/users');
             if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }

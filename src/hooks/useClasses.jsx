@@ -10,7 +10,7 @@ const useClasses = () => {
     // query for classes data
     const { refetch, data: classes = [], error } = useQuery(['classes'], async () => {
         try {
-            const response = await axios.get('http://localhost:5000/classes', {
+            const response = await axios.get('https://martial-arts-insights-server.vercel.app/classes', {
                 params: {
                     sortField: 'enrolledStudents',
                     sortOrder: 'dsc',

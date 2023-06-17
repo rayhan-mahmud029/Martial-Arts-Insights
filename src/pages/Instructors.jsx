@@ -7,7 +7,7 @@ const Instructors = () => {
     // query for instructors data
     const { data: instructors = [], error: errorInInstructors } = useQuery(['instructors'], async () => {
         try {
-            const response = await axios.get('http://localhost:5000/instructors', {
+            const response = await axios.get('https://martial-arts-insights-server.vercel.app/instructors', {
                 params: {
                     sortField: 'numOfStudents',
                     sortOrder: 'dsc',

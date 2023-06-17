@@ -22,7 +22,7 @@ const CheckOutForm = ({ price , selectedClasses}) => {
     // payment intent 
     useEffect(() => {
         if (price > 0) {
-            axios.post('http://localhost:5000/create-payment-intent', { price })
+            axios.post('https://martial-arts-insights-server.vercel.app/create-payment-intent', { price })
                 .then(res => {
                     console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
@@ -95,7 +95,7 @@ const CheckOutForm = ({ price , selectedClasses}) => {
                 classItems: selectedClasses.map(item => item.classID),
                 paidClassName: selectedClasses.map(item => item.name)
             }
-            axios.post('http://localhost:5000/payments', { paymentInfo })
+            axios.post('https://martial-arts-insights-server.vercel.app/payments', { paymentInfo })
                 .then(res => {
                     refetch()
                     console.log(res);
